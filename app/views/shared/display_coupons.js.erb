@@ -1,0 +1,15 @@
+$('#coupons').append('<%= j (render partial: "coupons/coupon", collection: @coupons, as: :coupon) %>'); 
+$('.pagination').replaceWith('<%= escape_javascript will_paginate(@coupons) %>');
+var offerItems = $('#coupons').find("div[data-type='offers']").length;
+var codeItems = $('#coupons').find("div[data-type='coupon_codes']").length;
+$('.offer_count').text(offerItems);
+$('.code_count').text(codeItems);
+$("#coupons").isotope({ filter: "*" });
+
+if($("li:has(a#tab_coupon_codes_pill)").hasClass("active")){
+  $("#coupons").isotope({ filter: ".coupon_codes" });
+};
+
+if($("li:has(a#tab_offers_pill)").hasClass("active")){
+  $("#coupons").isotope({ filter: ".offers" });
+};

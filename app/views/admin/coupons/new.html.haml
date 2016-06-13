@@ -1,0 +1,27 @@
+.page-header
+  %h1 Admin - Add Coupon
+.row
+  .s6.l6.col-md-offset-3
+    .well.well-lg
+      = bootstrap_form_for [:admin, @coupon] do |f|
+        = f.alert_message "Please fix the errors below."
+        = f.text_field :id_of_coupon
+        = f.text_field :title
+        = f.text_field :description
+        = f.text_field :code
+        = f.text_field :restriction
+        = f.text_field :link
+        = f.text_field :impression_pixel
+        = image_tag("#{@coupon.image}", size: "40x40")
+        = text_field_tag(:term)
+        - if @new_image
+          = image_tag("#{@new_image}", size: "40x40") 
+          = @new_image
+        = f.url_field :remote_image_url
+        = f.hidden_field :image_cache
+        = f.number_field :store_id
+        = f.number_field :coupon_source_id
+        = f.date_field :start_date, label: 'Start Date', class: 'form-control'
+        = f.date_field :end_date, label: 'End Date', class: 'form-control'
+        %p.text-center
+          = f.submit class: "btn btn-lg btn-success"

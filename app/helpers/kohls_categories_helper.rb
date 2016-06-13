@@ -1,0 +1,2 @@
+module KohlsCategoriesHelper
+end

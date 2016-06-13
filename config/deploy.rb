@@ -1,5 +1,9 @@
-set :application, 'my_app_name'
+set :application, 'akc'
 set :repo_url, 'git@example.com:me/my_repo.git'
+
+set :rvm_type, :user                     # Defaults to: :auto
+set :rvm_ruby_version, '2.3.0-p0'      # Defaults to: 'default'
+#set :rvm_custom_path, '~/.myveryownrvm'  # only needed if not detected
 
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 

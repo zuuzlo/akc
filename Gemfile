@@ -6,7 +6,25 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'turbolinks'
+gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 2.0'
+
+gem 'friendly_id', '~> 5.1.0'
+
+gem 'will_paginate-bootstrap'
+gem 'masonry-rails'
+gem 'holder_rails'
+
+gem 'find_keywords', '~> 0.0.3'
+gem 'ls_linkdirect_api', '~> 0.1.1'
+gem 'linkshare_api', '~> 0.2.0'
+
+gem 'rmagick'
+gem 'carrierwave'
+gem "fog"
+#gem 'fog'
+#gem 'aws-sdk'  replaced by fog-aws
+
 group :development, :test do
   gem 'byebug'
 end
@@ -23,8 +41,10 @@ gem 'pg'
 gem 'therubyracer', :platform=>:ruby
 gem 'unicorn'
 gem 'unicorn-rails'
+
+gem 'fabrication'
 group :development do
-  gem 'capistrano', '~> 3.0.1'
+  gem 'capistrano', '~> 3.4'
   gem 'capistrano-bundler'
   gem 'capistrano-rails', '~> 1.1.0'
   gem 'capistrano-rails-console'
@@ -36,14 +56,17 @@ group :development do
 end
 group :development, :test do
   gem 'factory_girl_rails'
+
   gem 'faker'
   gem 'pry-rails'
   gem 'pry-rescue'
   gem 'rspec-rails'
 end
 group :test do
+  gem "shoulda-matchers"
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
+  gem "webmock"
 end

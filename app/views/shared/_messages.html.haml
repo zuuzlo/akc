@@ -1,0 +1,17 @@
+
+-#flash.each do |name, msg|
+  -#%div(class="alert alert-#{name}"){:id => "flash"}
+    -#%a.close(data-dismiss='alert') &#215;
+    -#= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
+-flash.each do |name, msg|    
+  -if msg.is_a?(String)
+    #message_modal.modal.fade{"aria-hidden" => "false", "aria-labelledby" => "mySmallModalLabel", :role => "dialog", :tabindex => "-1"}
+      .modal-dialog
+        .modal-content{:class => "modal-alert-#{name}"}
+          .modal-body
+            = "#{msg}"
+            %button.close{"data-dismiss" => "modal", :type => "button"}
+              %span{"aria-hidden" => "true"}
+                %span.glyphicon.glyphicon-remove-circle
+              %span.sr-only
+                Close

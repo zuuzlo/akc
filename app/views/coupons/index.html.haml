@@ -1,0 +1,20 @@
+-provide(:title, "Home Page")
+-provide(:meta_keywords, "#{meta_keywords}") 
+-provide(:meta_description, "#{meta_description}")
+.row
+  .s5.l5
+    %h1 
+      %span.glyphicon.glyphicon-home
+      All Kohls Coupons
+    = render 'shared/coupon_tabs'
+  .s7.l7 
+    - if display_ad? 
+      =render partial: 'shared/ads_display'
+    -else
+      =render partial: 'shared/carousel', locals: { coupons: @cal_coupons }
+.coupon_header
+.row
+  = render 'shared/coupon_tab_content'
+  #coupon_modal
+  %nav#page-nav
+    = will_paginate @coupons

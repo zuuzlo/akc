@@ -1,13 +1,103 @@
--# navigation styled for Bootstrap 3.0
-%nav.navbar.navbar-default.navbar-fixed-top
-  .container
-    .navbar-header
-      %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      = link_to 'Home', root_path, class: 'navbar-brand'
-    .collapse.navbar-collapse
-      %ul.nav.navbar-nav
-        = render 'layouts/navigation_links'
+%nav.navbar.navbar-inverse.navbar-fixed-top.yamm{role: 'navigation'}
+  .navbar-header
+    %button.navbar-toggle{type: 'button', "data-toggle" => 'collapse', "data-target" => ".navbar-ex1-collapse"}
+      %span.sr-only Toggle navigation
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+    = link_to root_url, class: 'navbar-brand' do
+      %span.glyphicon.glyphicon-tags
+      All Kohls Coupons Cash Back
+  .collapse.navbar-collapse.navbar-ex1-collapse 
+    %ul.nav.navbar-nav
+      -# if user_signed_in?
+        -#%li{:class => "#{'active' if user_home? }" }
+          =#link_to user_url(current_user) do
+            -#%span.glyphicon.glyphicon-home
+            -#Home
+      - #else
+      %li{:class => "#{'active' if current_page?(root_url)}"}
+        =link_to root_url do
+          %span.glyphicon.glyphicon-home
+          Home
+      %li.dropdown{:class => "#{'active' if filt_page? }" }
+        %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
+          %span.glyphicon.glyphicon-filter
+          Coupon Categories
+          %b.caret
+        %ul.dropdown-menu
+          %li
+            .yamm-content
+              .row
+                %ul.col-sm-4.list-unstyled
+                  %li
+                    %p
+                      %strong
+                        %u
+                          Category
+                  - KohlsCategory.with_coupons.each do |cat|
+                    %li
+                      - cache(cat) do
+                        = link_to kohls_category_path(cat) do
+                          #{cat.name}
+                %ul.col-sm-4.list-unstyled
+                  %li
+                    %p
+                      %strong
+                        %u
+                          Type 
+                  - KohlsType.with_coupons.each do |typ|
+                    %li
+                      - cache(typ) do
+                        = link_to kohls_type_path(typ) do
+                          #{typ.name}
+                %ul.col-sm-4.list-unstyled
+                  %li
+                    %p
+                      %strong
+                        %u
+                          Only at Kohls
+                  - KohlsOnly.with_coupons.each do |only|
+                    %li
+                      - cache(only) do
+                        = link_to kohls_only_path(only) do
+                          #{only.name}
+    %form.navbar-form.navbar-left{ action: search_coupons_path, method: "get"}
+      %div.form-group
+        %input.form-control{type:"text", name: "search_term", placeholder:"Search Term", value: "" }
+      = button_tag(type: "submit", class: "btn btn-primary" ) do
+        %span.glyphicon.glyphicon-search
+        Search
+    - if user_signed_in?  
+      %ul.nav.navbar-nav.navbar-right 
+        %li.dropdown
+          %a(href="#" id="dlabel" role="button" data-toggle="dropdown" class="dropdown-toggle" data-target="#")
+            %span.glyphicon.glyphicon-user
+            #{current_user.email}
+            %b.caret
+          %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
+            %li
+              = link_to 'Invite a Friend', '#'
+            %li
+              = link_to 'Sign Out', destroy_user_session_path, :method => :delete
+            - if current_user.admin?
+              %li.divider
+              %li
+                = link_to 'View Coupons', admin_coupons_path
+              %li
+                = link_to 'Create New Coupon', new_admin_coupon_path
+              %li
+                = link_to 'Create New Email', admin_get_mailer_kohls_coupons_path
+              %li
+                =link_to "Get Keywords", admin_get_keywords_path
+    - else
+      %ul.nav.navbar-nav.navbar-right
+        %li
+          =link_to new_user_session_path do
+            %span.glyphicon.glyphicon-log-in
+            Sign in
+        %li
+          =link_to new_user_registration_path do
+            %span.glyphicon.glyphicon-tasks
+            Register

@@ -1,0 +1,16 @@
+- coupons.each do | coupon |
+  - row_class = coupon.end_date > Time.now ? '' : 'danger'
+  %tr{ :class => row_class }
+    %td
+      = image_tag("#{coupon.image}", size: "40x40")
+    %td
+      = coupon.code
+    %td
+      = coupon.title
+    %td
+      = coupon.description
+    %td
+      = coupon.end_date
+    %td
+      = link_to "Edit", edit_admin_coupon_path(coupon)
+      = link_to "Delete", admin_coupon_path(coupon), :method => :delete

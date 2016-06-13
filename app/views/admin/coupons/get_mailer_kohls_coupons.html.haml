@@ -1,0 +1,14 @@
+.page-header
+  %h1 Admin - Email - Coupons
+.row
+  %p
+    All Kohls Coupons is please to offer the following latest great deals at Kohls.  Please visit Kohls.com using the Get Deal button.  Also, don't forget to visit the new AllKohlsCoupons Cash Back site
+    = link_to "CashBack.AllKohlsCoupons.com", page_url('landing')
+    You can also visit
+    = link_to "AllKohlsCoupons.com", "http://allkohlscoupons.com"
+  %h3 Newest Coupon Codes to use at Kohls
+  %p Copy the coupon code and click the Get Deal button.
+  = render partial: 'admin/shared/email_coupons', locals: { coupons: @codes_coupons }
+  %h3 Newest Offer to use at Kohls
+  = render partial: 'admin/shared/email_coupons', locals: { coupons: @offers_coupons }
+  %p If you choose to register at CashBack.AllKohlsCoupons.com, please use the links from the site prior to shopping at Kohl's so you get cash back credit.

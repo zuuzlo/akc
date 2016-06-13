@@ -1,0 +1,3 @@
+$('#coupon_modal').empty();
+$('#coupon_modal').append("<%= j (render partial: 'shared/coupon_reveal_modal', locals: { coupon: @coupon }) %>");
+$('#coupon_reveal_modal_<%= @coupon.id %>').modal('toggle');

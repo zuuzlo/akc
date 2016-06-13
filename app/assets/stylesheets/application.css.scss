@@ -1,15 +1,233 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+
+@import "bootstrap-sprockets";
+@import 'bootstrap';
+
+
+.c1, .c2, .c3, .c4, .c5, .c6, .c7, .c8, .c9, .c10, .c11, .c12,
+.s1, .s2, .s3, .s4, .s5, .s6, .s7, .s8, .s9, .s10, .s11, .s12,
+.l1, .l2, .l3, .l4, .l5, .l6, .l7, .l8, .l9, .l10, .l11, .l12 {
+  position: relative;
+  // Prevent columns from collapsing when empty
+  min-height: 1px;
+  // Inner gutter via padding
+  padding-left:  ($grid-gutter-width / 2);
+  padding-right: ($grid-gutter-width / 2);
+}
+ 
+@mixin grid-shortcuts($prefix: 'l', $with-offsets: false) {
+  .#{$prefix}1, .#{$prefix}2,  .#{$prefix}3,  .#{$prefix}4,
+  .#{$prefix}5, .#{$prefix}6,  .#{$prefix}7,  .#{$prefix}8,
+  .#{$prefix}9, .#{$prefix}10, .#{$prefix}11, .#{$prefix}12 {
+    float: left;
+  }
+ 
+  @for $i from 1 through $grid-columns {
+    .#{$prefix}#{$i}  { width: percentage($i/$grid-columns) }
+  }
+ 
+  @if $with-offsets {
+    @for $i from 0 through $grid-columns - 1 {
+      $size: percentage($i/$grid-columns);
+      .#{$prefix}o#{$i} { margin-left: $size; }
+      .#{$prefix}r#{$i} { left:        $size; }
+      .#{$prefix}l#{$i} { right:       $size; }
+    }
+  }
+}
+
+//= require rails_bootstrap_forms
+
+// Masonry 
+//= require 'masonry/basic'
+//= require 'masonry/centered'
+//= require 'masonry/fluid'
+//= require 'masonry/gutters'
+//= require 'masonry/infinitescroll'
+//= require 'masonry/right-to-left'
+//= require 'masonry/transitions'
+ 
+// Generate grid for tiny devises
+@include grid-shortcuts($prefix: 'c');
+ 
+// Small device columns (phones to tablets)
+@media (min-width: $screen-tablet) {
+  @include grid-shortcuts($prefix: 's', $with-offsets: true);
+}
+ 
+// Medium and large device columns (desktop and up)
+@media (min-width: $screen-desktop) {
+  @include grid-shortcuts($prefix: 'l', $with-offsets: true);
+}
+
+/* general */
+  
+/* coupon */
+.centered { margin: 0 auto; }
+
+#coupons {
+  margin: 0 auto;
+  width: 100%;
+  .box {
+    margin: 5px;
+    width: 300px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
+    border-radius: 4px;
+    text-align: center;
+    img {
+      max-width: 100%;
+      height: auto;
+      padding: 5px;
+    }
+    h2 {
+      font-size: 22px;
+      margin: 0;
+      padding: 25px 10px;
+      a {
+        color: #474747;
+      }
+    }
+    .coupon_well {
+      font-size: 12px;
+      padding: 7px;
+    }
+  }
+}
+
+.panel-body {
+  padding: 5px;
+}
+
+.coupon {
+  text-align:center;
+  
+}
+
+.coupon_header {
+  padding-bottom: 9px;
+  margin: 10px 0 20px;
+  border-bottom: 1px solid $gray-lighter;
+}
+
+.thumbnail.coupon {
+  min-height:500px
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
+  padding: 6px 12px !important;
+  color: white !important;
+}
+
+
+.btn-xs:hover, .btn-xs:focus, .btn-xs:active, .btn-xs.active {
+  padding: 1px 5px !important;
+}
+
+.btn-xs {
+  margin-bottom: 5px !important;
+}
+
+/* Stores */
+img.stores {
+  padding-bottom:5px;
+}
+
+a.store_img:hover, a.store_img:focus, a.store_img:active {
+  padding: 0px !important;
+}
+
+/* Carousel */
+.carousel {
+  margin-top: 45px;
+}
+.carousel-caption, .carousel-control {
+  color: #d8118d !important;
+}
+
+.carousel-indicators{
+  bottom: 0px;
+}
+.carousel-indicators li {
+  border: 1px solid #d8118d;
+}
+
+.carousel-indicators li.active {
+  background-color: #d8118d !important; 
+}
+
+.carousel-caption {
+  padding-bottom: 10px;
+}
+
+.carousel-caption p {
+  font-size: 12px;
+}
+
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e297cb;
+}
+
+.modal-body.tos {
+  font-size: 10px;
+  color: grey
+}
+
+body { padding-top: 70px; }
+
+.navbar-nav.navbar-right:last-child {
+  margin-right: 0px !important; 
+}
+
+/* yamm large menu */
+.yamm .nav,
+.yamm .collapse,
+.yamm .dropup,
+.yamm .dropdown {
+  position: static;
+}
+.yamm .container {
+  position: relative;
+}
+.yamm .dropdown-menu {
+  left: auto;
+}
+.yamm .yamm-content {
+  padding: 10px 15px;
+}
+.yamm .dropdown .yamm-fw .dropdown-menu {
+  left: 0;
+  right: 0;
+}
+
+.navbar-nav .open .dropdown-menu {
+  background-color: white;
+}
+
+/* modal alert */
+
+.modal-alert-danger {
+  background-image: -webkit-linear-gradient(top,#f2dede 0,#e7c3c3 100%);
+  background-image: -o-linear-gradient(top,#f2dede 0,#e7c3c3 100%);
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#f2dede),to(#e7c3c3));
+  background-image: linear-gradient(to bottom,#f2dede 0,#e7c3c3 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff2dede', endColorstr='#ffe7c3c3', GradientType=0);
+  background-repeat: repeat-x;
+  border-color: #dca7a7;
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.modal-alert-success {
+  background-image: -webkit-linear-gradient(top,#dff0d8 0,#c8e5bc 100%);
+  background-image: -o-linear-gradient(top,#dff0d8 0,#c8e5bc 100%);
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#dff0d8),to(#c8e5bc));
+  background-image: linear-gradient(to bottom,#dff0d8 0,#c8e5bc 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffdff0d8', endColorstr='#ffc8e5bc', GradientType=0);
+  background-repeat: repeat-x;
+  border-color: #b2dba1;
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}

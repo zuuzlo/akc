@@ -1,0 +1,18 @@
+#carousel-store-generic.carousel.slide{ 'data-ride' => "carousel"}
+  %ol.carousel-indicators
+    - coupons.each_with_index do | coupon, i |
+      %li{ class: (i == 0) ? "active" : nil,'data-target'=>"#carousel-store-generic",'data-slide-to'=>"#{i}"}
+  %h4 
+    .carousel-inner
+      - coupons.each_with_index do | coupon, i |
+        .item{ class: (i == 0) ? "active" : nil }
+          =image_tag( "#{coupon.image}", size: "150x150", class: "img-responsive", alt: "#{coupon.title}")
+          .carousel-caption
+            %h4
+              = link_to "#{coupon.title}", anchor: "coupon_#{coupon.id}"
+            %p
+              #{coupon.description}
+  %a.left.btn-lg.carousel-control{ href: "#carousel-store-generic", 'role' => 'button', 'data-slide'=>"prev" }
+    %span.glyphicon.glyphicon-chevron-left
+  %a.right.btn-lg.carousel-control{ href: "#carousel-store-generic", 'role' => 'button','data-slide'=>"next" }
+    %span.glyphicon.glyphicon-chevron-right

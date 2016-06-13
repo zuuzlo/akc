@@ -1,0 +1,7 @@
+%ul.nav.nav-tabs{'role'=>"tablist"}
+  = nav_link_to "Favorite", user_path(current_user), "heart"
+  = nav_link_to "All Coupons", all_coupons_user_path(current_user), "tags"
+  = nav_link_to "Activity", user_activities_path(current_user), "flash"
+  = nav_link_to "Transactions", new_user_transaction_path(current_user), "usd"
+  = nav_link_to "Profile", edit_user_path(current_user), "edit"
+    

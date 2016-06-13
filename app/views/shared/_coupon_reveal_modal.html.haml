@@ -1,0 +1,21 @@
+.modal.fade{ "id" => "coupon_reveal_modal_#{coupon.id}","tabindex"=>"-1", "role" => "dialog", "aria-labelledby" => "couponRevealModal", "aria-hidden" => "true" }
+  .modal-dialog.modal-sm
+    .modal-content.text-center
+      .modal-header
+        %h4.modal-title{"id" => "couponRevealModal"}
+          Copy the Coupon Code
+          %button.close{"type"=>"button", "data-dismiss"=>"modal"}
+            %span{"aria-hidden" => "true"}
+              %span.glyphicon.glyphicon-remove-circle
+            %span.sr-only
+              Close
+      .modal-body
+        %p
+          Past the code during checkout.
+        %h4
+          #{coupon.code}
+        = button_link(coupon)
+      .modal-footer
+        %p.text-center
+          Show coupon codes on home page by registering.
+        

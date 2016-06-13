@@ -1,0 +1,29 @@
+.page-header
+  %h1 Admin - Description and Keywords
+.row
+  = bootstrap_form_tag url: '/admin/get_keywords', method: 'get' , :html => {:id => 'toggleForm'} do |f|
+    .s12.l12
+      = f.form_group :type, label: { text: "Select Type you would like to search for."}, help: "Must select a Type!" do
+        .row
+          .s2.l2
+            = f.radio_button :type, 'KohlsCategory', label: "KohlsCategory", 'data-toggle' => "#type_k_cat_type_id" 
+          .s2.l2  
+            = select("type_k_cat", "type_id", KohlsCategory.with_coupons.collect {|p| [ p.name, p.id ] }, { include_blank: true }, {class: "form-control two three", style: "display: none" })
+        .row
+          .l2.s2
+            = f.radio_button :type, 'KohlsType', label: "KohlsType", 'data-toggle' => "#type_k_type_type_id" 
+          .l2.s2
+            = select("type_k_type", "type_id", KohlsType.with_coupons.collect {|p| [ p.name, p.id ] }, { include_blank: true }, {class: "form-control three one", style: "display: none" })
+        -#.row
+          -#.l2.s2
+            = #f.radio_button :type, 'KohlsOnly' , label: "KohlsOnly", 'data-toggle' => "#type_k_only_type_id"
+          -#.l2.s2
+            = #select("type_k_only", "type_id", KohlsOnly.with_coupons.collect {|p| [ p.name, p.id ] }, { include_blank: true }, {class: "form-control", style: "display: none" })
+
+      %p
+        = f.submit "Show Coupons", class: "btn btn-success"
+  - if @description
+    %p
+      = "#{@description}"
+    %p
+      = "#{@keywords}"
