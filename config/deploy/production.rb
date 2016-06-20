@@ -1,13 +1,14 @@
 set :stage, :production
+set :branch, "master"
 
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
-role :app, %w{deploy@example.com}
-role :web, %w{deploy@example.com}
-role :db,  %w{deploy@example.com}
+#role :app, %w{deploy@example.com}
+#role :web, %w{deploy@example.com}
+#role :db,  %w{deploy@example.com}
 
 # Extended Server Syntax
 # ======================
@@ -15,7 +16,21 @@ role :db,  %w{deploy@example.com}
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
+set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
+set :server_name, "test.allkohlscoupons.com"
+
+server 'do.zuuzlo.com', user: 'deploy', roles: %w{web app db}, primary: true
+set :deploy_to, "/home/#{fetch(:deploy_user)}/apps/#{fetch(:full_app_name)}"
+
+set :rails_env, :production
+
+# number of unicorn workers, this will be reflected in
+# the unicorn.rb and the monit configs
+set :unicorn_worker_count, 1
+
+# whether we're using ssl or not, used for building nginx
+# config file
+set :enable_ssl, false
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options

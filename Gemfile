@@ -42,6 +42,7 @@ gem 'therubyracer', :platform=>:ruby
 gem 'unicorn'
 gem 'unicorn-rails'
 
+
 gem 'fabrication'
 group :development do
   gem 'capistrano', '~> 3.4'
@@ -49,6 +50,9 @@ group :development do
   gem 'capistrano-rails', '~> 1.1.0'
   gem 'capistrano-rails-console'
   gem 'capistrano-rvm', '~> 0.1.1'
+  gem 'capistrano-sidekiq'
+  gem 'capistrano-ssh-doctor', '~> 1.0'
+  gem 'capistrano-cookbook', require: false
   gem 'html2haml'
   gem 'hub', :require=>nil
   gem 'rails_layout'
