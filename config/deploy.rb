@@ -19,9 +19,10 @@ set :rvm_type, :user                     # Defaults to: :auto
 # set :format, :pretty
 # set :log_level, :debug
 # set :pty, true
+set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 
 set :linked_files, %w{config/database.yml config/application.yml}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5
@@ -88,4 +89,19 @@ namespace :deploy do
   # automatically.
   after 'deploy:publishing', 'deploy:restart'
 
+end
+
+namespace :rails do
+  desc 'Open a rails console `cap [staging] rails:console [server_index default: 0]`'
+  task :console do    
+    server = roles(:app)[ARGV[2].to_i]
+
+    puts "Opening a console on: #{server.hostname}...."
+
+    cmd = "ssh #{server.user}@#{server.hostname} -t 'cd #{fetch(:deploy_to)}/current && bundle exec rails console RAILS_ENV=#{fetch(:rails_env)}'"
+
+    puts cmd
+
+    exec cmd
+  end
 end

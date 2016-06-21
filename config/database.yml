@@ -17,3 +17,12 @@ test:
   username: kirk
   password: sd3472307
   #template: template1
+production:
+  adapter:  postgresql
+  #host:     localhost
+  encoding: unicode
+  database: akc_production
+  pool:     5
+  username: kirk
+  password: sd3472307
+  #template: template1
