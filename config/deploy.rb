@@ -16,9 +16,16 @@ set :rvm_type, :user                     # Defaults to: :auto
 
 # set :deploy_to, '/var/www/my_app'
 
-# set :format, :pretty
+#set :format, :pretty
 # set :log_level, :debug
 # set :pty, true
+
+Airbrussh.configure do |config|
+  config.color = false
+  config.command_output = true
+  # etc.
+end
+
 set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 
 set :linked_files, %w{config/database.yml config/application.yml}
@@ -89,19 +96,4 @@ namespace :deploy do
   # automatically.
   after 'deploy:publishing', 'deploy:restart'
 
-end
-
-namespace :rails do
-  desc 'Open a rails console `cap [staging] rails:console [server_index default: 0]`'
-  task :console do    
-    server = roles(:app)[ARGV[2].to_i]
-
-    puts "Opening a console on: #{server.hostname}...."
-
-    cmd = "ssh #{server.user}@#{server.hostname} -t 'cd #{fetch(:deploy_to)}/current && bundle exec rails console RAILS_ENV=#{fetch(:rails_env)}'"
-
-    puts cmd
-
-    exec cmd
-  end
 end

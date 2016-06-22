@@ -53,6 +53,7 @@ group :development do
   gem 'capistrano-sidekiq'
   gem 'capistrano-ssh-doctor', '~> 1.0'
   gem 'capistrano-cookbook', require: false
+  gem "airbrussh", require: false
   gem 'html2haml'
   gem 'hub', :require=>nil
   gem 'rails_layout'

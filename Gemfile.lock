@@ -479,6 +479,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  airbrussh
   bootstrap-sass
   byebug
   capistrano (~> 3.4)
