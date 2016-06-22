@@ -18,12 +18,12 @@ class Admin::CouponsController < AdminController
   end
 
   def edit
-    @coupon = Coupon.find(params[:id])
+    @coupon = Coupon.friendly.find(params[:id])
     render 'new'
   end
 
   def update
-    @coupon = Coupon.find(params[:id])
+    @coupon = Coupon.friendly.find(params[:id])
 
     if params[:term] == ""
       

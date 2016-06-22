@@ -53,7 +53,7 @@ class KohlsTransactions
             new_coupon.kohls_types << KohlsType.find_by_kc_id(type_kohls) if type_kohls
           end
         
-          #new_coupon.kohls_types << KohlsType.find_by_kc_id(6) if new_coupon.code
+          new_coupon.kohls_types << KohlsType.find_by_kc_id(6) if new_coupon.code
           
           new_coupon.remote_image_url = find_product_image(name_check)
           new_coupon.save

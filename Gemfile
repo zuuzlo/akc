@@ -8,6 +8,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 2.0'
+gem 'bootstrap_form'
 
 gem 'friendly_id', '~> 5.1.0'
 

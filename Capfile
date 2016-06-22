@@ -17,13 +17,13 @@ require 'capistrano/deploy'
 #
 require 'capistrano/rvm'
 # require 'capistrano/rbenv'
-#require 'capistrano/console'
+require 'capistrano/console'
 # require 'capistrano/chruby'
 require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/ssh_doctor'
-require 'capistrano/rails/console'
+#require 'capistrano/rails/console'
 require "airbrussh/capistrano"
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.

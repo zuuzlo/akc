@@ -16,12 +16,12 @@ set :rvm_type, :user                     # Defaults to: :auto
 
 # set :deploy_to, '/var/www/my_app'
 
-#set :format, :pretty
+set :format, :simpletext
 # set :log_level, :debug
 # set :pty, true
 
 Airbrussh.configure do |config|
-  config.color = false
+  config.color = true
   config.command_output = true
   # etc.
 end
@@ -96,4 +96,38 @@ namespace :deploy do
   # automatically.
   after 'deploy:publishing', 'deploy:restart'
 
+  desc 'Runs rake db:seed'
+  task :seed => [:set_rails_env] do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, "db:seed"
+        end
+      end
+    end
+  end
+end
+
+namespace :rails do
+  desc "Open the rails console on each of the remote servers"
+  task :console => 'rvm:hook' do
+    on roles(:app), :primary => true do |host|
+      rails_env = fetch(:stage)
+      execute_interactively host, "console #{rails_env}"
+    end
+  end
+
+  desc "Open the rails dbconsole on each of the remote servers"
+  task :dbconsole => 'rvm:hook' do
+    on roles(:app), :primary => true do |host|
+      rails_env = fetch(:stage)
+      execute_interactively host, "dbconsole #{rails_env}"
+    end
+  end
+
+  def execute_interactively(host, command)
+    command = "cd #{fetch(:deploy_to)}/current && #{SSHKit.config.command_map[:bundle]} exec rails #{command}"
+    puts command if fetch(:log_level) == :debug
+    exec "ssh -l #{host.user} #{host.hostname} -p #{host.port || 22} -t '#{command}'"
+  end
 end
