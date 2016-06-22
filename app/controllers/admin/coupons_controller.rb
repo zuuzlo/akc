@@ -29,6 +29,8 @@ class Admin::CouponsController < AdminController
       
       if @coupon.update(coupon_params)
         flash[:success] = "Coupon updated."
+        @coupon_count = Coupon.count
+        @coupons = Coupon.order('end_date ASC').load
         redirect_to admin_coupons_path
       else
         render 'index'
