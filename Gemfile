@@ -24,7 +24,7 @@ gem 'rmagick'
 gem 'carrierwave'
 gem "fog"
 #gem 'fog'
-#gem 'aws-sdk'  replaced by fog-aws
+gem 'aws-sdk'
 
 group :development, :test do
   gem 'byebug'
