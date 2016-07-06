@@ -16,7 +16,7 @@ CarrierWave.configure do |config|
     config.fog_directory = 'testakc'
   else
     config.storage = :fog
-    config.fog_directory = 'akc-images'
+    config.fog_directory = 'akcimages'
   end
   config.cache_dir = "#{Rails.root}/tmp/uploads"
   config.fog_attributes = { 'Cache-Control'=>"max-age=#{365.day.to_i}" }
