@@ -22,10 +22,10 @@ gem 'linkshare_api', '~> 0.2.0'
 
 gem 'rmagick'
 gem 'carrierwave'
-gem "figaro"
-gem "fog"
+#gem "figaro"
+gem "fog-aws"
 #gem 'fog'
-gem 'aws-sdk'
+#gem 'aws-sdk'
 
 group :development, :test do
   gem 'byebug'

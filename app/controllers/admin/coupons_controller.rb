@@ -33,6 +33,7 @@ class Admin::CouponsController < AdminController
         @coupons = Coupon.order('end_date ASC').load
         redirect_to admin_coupons_path
       else
+        @coupons = Coupon.order('end_date ASC').load
         render 'index'
       end
     else
