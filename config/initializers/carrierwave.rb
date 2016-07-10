@@ -5,9 +5,9 @@ CarrierWave.configure do |config|
     :provider              => 'AWS',
     :aws_access_key_id     => ENV['AWS_ACCESS_KEY_ID'],
     :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
-    :region                => 'us-east'
+    :region                => 'us-east-1'
   }
-  
+
   if Rails.env.test?
     config.storage = :file
     config.enable_processing = false
