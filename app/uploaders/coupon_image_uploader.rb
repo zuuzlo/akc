@@ -51,5 +51,5 @@ class CouponImageUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
-  #process :resize_to_fill => [125, 125]
+  process :resize_to_fill => [125, 125]
 end
