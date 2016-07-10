@@ -103,7 +103,7 @@ namespace :deploy do
     # invoke 'deploy:assets:precompile'
     invoke 'deploy:assets:copy_manifest'
     invoke 'deploy:assets:precompile_local'
-    invoke 'deploy:assets:backup_manifest'
+    #invoke 'deploy:assets:backup_manifest'
   end
   
   
