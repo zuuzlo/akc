@@ -23,6 +23,7 @@ require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/ssh_doctor'
+require 'capistrano/cookbook'
 #require 'capistrano/rails/console'
 require "airbrussh/capistrano"
 

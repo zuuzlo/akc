@@ -26,10 +26,12 @@ Airbrussh.configure do |config|
   # etc.
 end
 
+#set :bundle_binstubs, nil #trying 7/11
+
 set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 
 set :linked_files, %w{config/database.yml config/application.yml}
-set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5
@@ -162,7 +164,16 @@ namespace :deploy do
       end
     end
   end
+
+  desc 'Runs rake db:reset'
+  task :db_reset => [:set_rails_env] do
+    with rails_env: fetch(:rails_env) do
+      execute :rake, "db:reset"
+    end
+  end
 end
+
+
 
 namespace :rails do
   desc "Open the rails console on each of the remote servers"
