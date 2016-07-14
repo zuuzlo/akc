@@ -20,7 +20,8 @@ gem 'find_keywords', '~> 0.0.3'
 gem 'ls_linkdirect_api', '~> 0.1.1'
 gem 'linkshare_api', '~> 0.2.0'
 
-gem 'rmagick'
+#gem 'rmagick'
+gem "mini_magick"
 gem 'carrierwave-aws'
 #gem 'carrierwave', '~> 0.10.0'
 #gem "fog-aws"
