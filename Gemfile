@@ -21,10 +21,11 @@ gem 'ls_linkdirect_api', '~> 0.1.1'
 gem 'linkshare_api', '~> 0.2.0'
 
 gem 'rmagick'
-gem 'carrierwave', '~> 0.10.0'
+gem 'carrierwave-aws'
+#gem 'carrierwave', '~> 0.10.0'
 #gem "fog-aws"
-gem 'fog', '~> 1.38.0'
-gem 'aws-sdk', '~> 1.55.0'
+#gem 'fog', '~> 1.38.0'
+#gem 'aws-sdk', '~> 1.55.0'
 
 group :development, :test do
   gem 'byebug'

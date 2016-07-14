@@ -1,10 +1,10 @@
 CarrierWave.configure do |config|
   #config.fog_provider = 'fog/aws'
-  config.fog_credentials = {
+  config.aws_credentials = {
     # Configuration for Amazon S3
-    :provider              => 'AWS',
-    :aws_access_key_id     => ENV['AWS_ACCESS_KEY_ID'],
-    :aws_secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+    #:provider              => 'AWS',
+    :access_key_id     => ENV['AWS_ACCESS_KEY_ID'],
+    :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
     :region                => 'us-east-1'
   }
 
@@ -13,12 +13,17 @@ CarrierWave.configure do |config|
     config.enable_processing = false
     config.root = "#{Rails.root}/tmp"
   elsif Rails.env.development?
-    config.storage = :fog
-    config.fog_directory = 'testakc'
+    config.storage = :aws
+    config.aws_bucket = 'testakc'
   else
-    config.storage = :fog
-    config.fog_directory = 'akcimages'
+    config.storage = :aws
+    config.aws_bucket = 'akcimages'
   end
-  config.cache_dir = "#{Rails.root}/tmp/uploads"
-  config.fog_attributes = { 'Cache-Control'=>"max-age=#{365.day.to_i}" }
+  config.aws_authenticated_url_expiration = 60 * 60 * 24 * 7
+  config.aws_attributes = {
+    expires: 1.week.from_now.httpdate,
+    cache_control: 'max-age=604800'
+  }
+  #config.cache_dir = "#{Rails.root}/tmp/uploads"
+  #config.fog_attributes = { 'Cache-Control'=>"max-age=#{365.day.to_i}" }
 end
