@@ -25,6 +25,6 @@ CarrierWave.configure do |config|
     expires: 1.week.from_now.httpdate,
     cache_control: 'max-age=604800'
   }
-  config.cache_dir = "#{Rails.root}/tmp/cache"
+  config.cache_dir = File.join(Rails.root, 'tmp', 's3', Rails.env)
   #config.fog_attributes = { 'Cache-Control'=>"max-age=#{365.day.to_i}" }
 end
