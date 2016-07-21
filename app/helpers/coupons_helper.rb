@@ -64,7 +64,7 @@ module CouponsHelper
     if coupon.image
       image_tag("#{coupon.image}", size: "125x125", class: "img-circle", alt: "#{coupon.title}")
     else
-      image_tag( "#{coupon.store_image}",size: "125x125", alt: "#{coupon.title}" )
+      image_tag( "#{coupon.image}",size: "125x125", alt: "#{coupon.title}" )
     end
   end
 
