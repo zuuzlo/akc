@@ -71,7 +71,7 @@ set(:symlinks, [
 after 'deploy:setup_config', 'nginx:reload'
 
 # Clear existing task so we can replace it rather than "add" to it.
-Rake::Task["deploy:compile_assets"].clear 
+# This to do local assets Rake::Task["deploy:compile_assets"].clear 
 
 namespace :deploy do
 
@@ -99,7 +99,7 @@ namespace :deploy do
   # As of Capistrano 3.1, the `deploy:restart` task is not called
   # automatically.
   after 'deploy:publishing', 'deploy:restart'
-
+=begin
   desc 'Compile assets'
   task :compile_assets => [:set_rails_env] do
     # invoke 'deploy:assets:precompile'
@@ -153,7 +153,7 @@ namespace :deploy do
     end
   end
 
-
+=end
   desc 'Runs rake db:seed'
   task :seed => [:set_rails_env] do
     on primary fetch(:migration_role) do
@@ -162,13 +162,6 @@ namespace :deploy do
           execute :rake, "db:seed"
         end
       end
-    end
-  end
-
-  desc 'Runs rake db:reset'
-  task :db_reset => [:set_rails_env] do
-    with rails_env: fetch(:rails_env) do
-      execute :rake, "db:reset"
     end
   end
 end
