@@ -28,6 +28,8 @@ gem 'carrierwave-aws'
 #gem 'fog', '~> 1.38.0'
 #gem 'aws-sdk', '~> 1.55.0'
 
+gem 'spintax_parser'
+
 group :development, :test do
   gem 'byebug'
 end

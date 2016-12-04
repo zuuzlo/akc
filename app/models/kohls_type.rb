@@ -5,6 +5,7 @@ class KohlsType < ActiveRecord::Base
 
   validates :name, presence: true
   validates :slug, presence: true
+  validates :kc_id, uniqueness: true
 
   extend FriendlyId
   friendly_id :name, use: :slugged

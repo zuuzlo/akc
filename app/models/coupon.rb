@@ -20,7 +20,7 @@ class Coupon < ActiveRecord::Base
   validates :link, presence: true
   validates :slug, presence: true
 
-  #mount_uploader :image, CouponImageUploader
+  mount_uploader :image, CouponImageUploader
 
   extend FriendlyId
   friendly_id :title, use: :slugged

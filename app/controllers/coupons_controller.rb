@@ -14,6 +14,7 @@ class CouponsController < ApplicationController
     @term = params[:search_term]
     load_coupon_offer_code(@coupons)
     load_cal_picts(@coupons)
+    render :index, locals: { title: "Search: #{params[:search_term]}", meta_keywords: seo_keywords(@coupons, nil), meta_description: seo_description(@coupons, nil ) } 
   end
 
   def tab_all

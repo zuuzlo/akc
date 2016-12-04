@@ -2,7 +2,7 @@
   .panel-heading
     %h5
       %b
-        #{coupon.title.split("- ").last}
+        #{coupon.title}
   .panel-body
     = product_image(coupon)
     -#if user_signed_in?

@@ -1,6 +1,7 @@
 class KohlsTransactions
 
   require 'open-uri'
+
   LsLinkdirectAPI.token = ENV["LINKSHARE_TOKEN"]
   LinkshareAPI.token = ENV["LINKSHARE_TOKEN"]
 
@@ -8,12 +9,13 @@ class KohlsTransactions
     textlinks = LsLinkdirectAPI::TextLinks.new
     params = { mid: 38605, cat: -1, endDate: Time.now.strftime("%m%d%Y") }
     response = textlinks.get(params)
+  
     response.data.each do |item|
       coupon_hash = {
         link: item.clickURL,
         id_of_coupon: item.linkID.to_i,
-        description: "#{item.linkName} #{item.textDisplay}",
-        title: title_shorten("#{item.textDisplay}"),
+        description: "#{item.textDisplay}",
+        title: make_title("#{item.linkName}", "#{item.textDisplay}"),
         start_date: Time.parse(item.startDate),
         code: find_coupon_code("#{item.textDisplay}"),
         restriction: nil,
@@ -31,16 +33,10 @@ class KohlsTransactions
         name_check = FindKeywords::Keywords.new("#{item.linkName} #{item.textDisplay} #{item.categoryName}").keywords.join(" ")
         name_check_raw = "#{item.linkName} #{item.textDisplay} #{item.categoryName}"
         
-        if new_coupon.save
-=begin
-          PjTransactions.pj_find_category(name_check).each do | cat |
-            new_coupon.categories << Category.find_by_ls_id(cat) if cat
-          end
+        
 
-          PjTransactions.pj_find_type(name_check_raw).each do | type_x |
-            new_coupon.ctypes << Ctype.find_by_ls_id(type_x) if type_x
-          end
-=end
+        if new_coupon.save
+
           find_kohls_cat(name_check).each do | kohls_cat |
             new_coupon.kohls_categories << KohlsCategory.find_by_kc_id(kohls_cat) if kohls_cat
           end
@@ -55,7 +51,8 @@ class KohlsTransactions
         
           new_coupon.kohls_types << KohlsType.find_by_kc_id(6) if new_coupon.code
           
-          new_coupon.image = find_product_image(name_check)
+          #require 'pry'; binding.pry
+          new_coupon.remote_image_url = find_product_image(name_check)
           new_coupon.save
         end
       end
@@ -67,7 +64,7 @@ class KohlsTransactions
     #1 For The Home, 2 Bed & Bath, 3 Furniture, 4 Women, 5 Swin, 6 Men, 7 Teens, 8 Kids,
     #9 Baby, 10 shoes, 11 Jewlery & Watches, Sports Fan Shop
     kohls_cat_hash = {
-      1 => ['patio','grills','outdoor','bbq','hammocks','gazebos','tailgating','garden','bird','stepping','appliances','coffee','tea','cookware','bakeware','cooking','cutlery','cookbooks','food','cleaning','kitchen','rugs','dinnerware','flatware','silverware','table','wine','dining','office','bar','home','speakers','bareware','glassware','serveware','scraper'],
+      1 => ['patio','grills','outdoor','bbq','hammocks','gazebos','tailgating','garden','bird','stepping','appliances','coffee','tea','cookware','bakeware','cooking','cutlery','cookbooks','food','cleaning','kitchen','rugs','dinnerware','flatware','silverware','table','wine','dining','office','bar','home','speakers','bareware','glassware','serveware','scraper', 'humidifier'],
       2 => ['bedskirts','blankets','throws','comforters','comforter','duvet','mattress','mattresses','pillows','shams','quilts','sheets','bedding','towels','towel','shower','bath','personal'],
       3 => ['furniture','art','candles','decorative','lighting','lamp','lamps','frames','albums','cushions','slipcovers','rugs','treatments'],
       4 => ['women','women\'s','capris','dresses','intimates','bras','panties','shapewear','handbags'],
@@ -116,14 +113,15 @@ class KohlsTransactions
   end
 
   def self.find_kohls_type(term)
-    #1=> 'Dollar Off', 2=> 'Percent Off', 3=> 'Free Shipping', 4=>'Coupon Code', 5=>'General Promotion'
+    #1=> 'Dollar Off', 2=> 'Percent Off', 3=> 'Free Shipping', 4=>'Coupon Code', 5=>'General Promotion', 15=> 'Printable Coupon'
     term.downcase!
     kohls_type_hash = {
       1 => [/\$/],
       2 => [/\%/],
-      3 => [/free shipping/, /ships free/],
+      3 => [/free shipping/, /ships free/, /free standard shipping/],
       4 => [/code/],
-      6 => [/sitewide/]
+      6 => [/sitewide/],
+      15 => [/print/]
     }
 
     types = []
@@ -169,6 +167,7 @@ class KohlsTransactions
       #sort: :retailprice,
       #sorttype: :asc
     }
+    #require 'pry'; binding.pry
     response = LinkshareAPI.product_search(options)
 
     if response.total_matches == 0
@@ -178,9 +177,34 @@ class KohlsTransactions
     end
   end
 
+  def self.title_short(title)
+    
+    right_split = [/valid.*/i, /reg.*/i, /with code.*/i, /purchase.*/i, /with promo code.*/i]
+
+    title_out = String.new
+    t = Array.new
+    right_split.each_with_index do |split_word, i|
+      s = title.slice(split_word)
+      t[i] = title
+      #require 'pry'; binding.pry
+
+      t[i].remove!(s) if s && t[i].length != s.length
+      
+      
+      title_out = t[i] if t[i].length <= title_out.length || i == 0 
+    end
+
+    title_out.strip!
+    title_out.chomp!('.') if title_out.end_with?('.')
+    title_out.gsub!('-', ' to ') if title_out =~ (/\d[-]\d/)
+    output = title_out.titleize
+    output.gsub!('To', 'to') if output.include?(' To ')
+    output
+  end
+
   def self.title_shorten(title, length = 50)
     title.delete!('()') if title.include?('(')
-    name = title.strip.downcase.gsub(/(\d{2}|\d{1})\/(\d{2}|\d{1})(-|.-.)(\d{2}|\d{1})\/(\d{2}|\d{1})/, "").gsub(/(sept|oct|nov|dec|jan|feb|mar|apr|may|jun|jul|aug)(\s*)(\d*|)(-|.-.|)/,"")
+    name = title.strip.downcase.gsub(/(\d{2}|\d{1})\/(\d{2}|\d{1})(-|.-.)(\d{2}|\d{1})\/(\d{2}|\d{1})/, "")  #.gsub(/(sept|oct|nov|dec|jan|feb|mar|apr|may|jun|jul|aug)(\s*)(\d*|)(-|.-.|)/,"")
     name.gsub!(/[^a-z\s\&]/i,"")
     name_array = name.split(" ")
     items_to_remove = ['reg', 'all', 'orig', 'valid', 'code']
@@ -228,7 +252,24 @@ class KohlsTransactions
     name = name_array.join(" ")
     #name.gsub!(/[\]\[!"#$%'()*+,.\/:;<=>?@\^_`{|}~-]/,"")
     name.gsub!(/#{Regexp.escape('\/')}/, "")
-    name.titleize
+    title.titleize
+  end
+
+  def self.make_title(title, description)
+    if title == description
+      title_short(title)
+    else
+      if title.length < 50
+        title_short(title)
+      else
+        title_short(title)
+      end
+    end
+  end
+
+  def self.addspin(name)
+    spintax = "{kohls cash code|kohls promotional codes|kohls 30 percent off|kohls online coupons|kohls 30 coupon|kohls discount|kohls discount codes|kohls coupon 30|kohl coupons|kohls coupons 30|kohls online coupon|kohls promo|kohls free shipping|kohls 30|kohls discount code|kohls sales|kohls sale|kohls codes|coupons for kohls|kohls coupon codes|kohls promo codes|kohl|kohl s|kohls coupon code|kohls coupon|kohls promo code|kohls coupons}"
+    "#{spintax.unspin} #{name}"
   end
 
   private

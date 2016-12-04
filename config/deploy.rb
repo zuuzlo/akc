@@ -41,6 +41,7 @@ set :keep_releases, 5
 # for details of operations
 set(:config_files, %w(
   nginx.conf
+  monit
   unicorn.rb
   unicorn_init.sh
 ))
@@ -62,6 +63,10 @@ set(:symlinks, [
   {
     source: "unicorn_init.sh",
     link: "/etc/init.d/unicorn_#{fetch(:full_app_name)}"
+  },
+  {
+    source: "monit",
+    link: "/etc/monit/conf.d/#{fetch(:full_app_name)}.conf"
   }
 ])
 
@@ -75,13 +80,11 @@ after 'deploy:setup_config', 'nginx:reload'
 
 namespace :deploy do
 
-
-
   # make sure we're deploying what we think we're deploying
   before :deploy, "deploy:check_revision"
   # only allow a deploy with passing tests to deployed
   #before :deploy, "deploy:run_tests"
-  
+  after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
   after :finishing, 'deploy:cleanup'
 
   # remove the default nginx configuration as it will tend
@@ -94,12 +97,12 @@ namespace :deploy do
 
   # Restart monit so it will pick up any monit configurations
   # we've added
-  #after 'deploy:setup_config', 'monit:restart'
+  after 'deploy:setup_config', 'monit:restart'
 
   # As of Capistrano 3.1, the `deploy:restart` task is not called
   # automatically.
   after 'deploy:publishing', 'deploy:restart'
-
+=begin
   Rake::Task['deploy:assets:backup_manifest'].clear_actions
   namespace :deploy do
     namespace :assets do
@@ -114,7 +117,7 @@ namespace :deploy do
       end
     end
   end
-=begin
+
   desc 'Compile assets'
   task :compile_assets => [:set_rails_env] do
     # invoke 'deploy:assets:precompile'

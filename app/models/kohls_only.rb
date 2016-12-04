@@ -6,6 +6,7 @@ class KohlsOnly < ActiveRecord::Base
 
   #has_and_belongs_to_many :coupons, -> { order "end_date ASC" }
   validates :name, presence: true
+  validates :kc_id, uniqueness: true
 
   extend FriendlyId
   friendly_id :name, use: :slugged
