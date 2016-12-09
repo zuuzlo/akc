@@ -47,6 +47,7 @@ gem 'haml-rails'
 gem 'pg'
 gem 'therubyracer', :platform=>:ruby
 gem 'unicorn'
+gem 'unicorn-worker-killer'
 gem 'unicorn-rails'
 gem 'sidekiq'
 gem 'redis'
