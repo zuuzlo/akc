@@ -33,8 +33,27 @@ set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 set :linked_files, %w{config/database.yml config/application.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
+# Defaults to :db role
+set :migration_role, :db
+
+# Defaults to the primary :db server
+set :migration_servers, -> { primary(fetch(:migration_role)) }
+
+# Defaults to false
+# Skip migration if files in db/migrate were not modified
+set :conditionally_migrate, true
+
+# Defaults to [:web]
+set :assets_roles, [:web, :app]
+
+# If you need to touch public/images, public/javascripts, and public/stylesheets on each deploy
+set :normalize_asset_timestamps, %w{public/images public/javascripts public/stylesheets}
+
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
-set :keep_releases, 5
+set :keep_releases, 2
+
+set :pty, false
+
 
 # which config files should be copied by deploy:setup_config
 # see documentation in lib/capistrano/tasks/setup_config.cap
@@ -85,6 +104,7 @@ namespace :deploy do
   # only allow a deploy with passing tests to deployed
   #before :deploy, "deploy:run_tests"
   after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
+  
   after :finishing, 'deploy:cleanup'
 
   # remove the default nginx configuration as it will tend
