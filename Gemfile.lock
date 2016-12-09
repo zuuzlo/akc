@@ -392,10 +392,12 @@ DEPENDENCIES
   pry-rescue
   rails (= 4.2.5.1)
   rails_layout
+  redis
   rspec-rails
   sass-rails (>= 3.2)
   selenium-webdriver
   shoulda-matchers
+  sidekiq
   spintax_parser
   spring
   sprockets (= 3.6.3)

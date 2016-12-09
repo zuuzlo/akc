@@ -48,6 +48,8 @@ gem 'pg'
 gem 'therubyracer', :platform=>:ruby
 gem 'unicorn'
 gem 'unicorn-rails'
+gem 'sidekiq'
+gem 'redis'
 
 
 gem 'fabrication'
