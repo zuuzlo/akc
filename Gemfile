@@ -54,7 +54,7 @@ gem 'fabrication'
 group :development do
   gem 'capistrano', '~> 3.4'
   gem 'capistrano-bundler'
-  gem 'capistrano-rails', '~> 1.1.0'
+  gem 'capistrano-rails', '~> 1.1.3'
   gem 'capistrano-rails-console'
   gem 'capistrano-rvm', '~> 0.1.1'
   gem 'capistrano-sidekiq'
@@ -64,7 +64,7 @@ group :development do
   gem 'html2haml'
   gem 'hub', :require=>nil
   gem 'rails_layout'
-  gem 'spring-commands-rspec'
+  #gem 'spring-commands-rspec'
 end
 group :development, :test do
   gem 'factory_girl_rails'
