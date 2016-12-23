@@ -12,7 +12,7 @@ class CouponsController < ApplicationController
   def show
     @coupon = Coupon.friendly.find(params[:id])
     @coupons = Coupon.active_coupons[0..2]
-    render :show, locals: { title: "#{@coupon.title}", meta_keywords: seo_keywords(@coupon, nil), meta_description: seo_description(@coupon, nil ) } 
+    render :show, locals: { title: "#{@coupon.title}", meta_keywords: seo_keywords(@coupons, nil), meta_description: seo_description(@coupons, nil ) } 
   end
 
   def search
