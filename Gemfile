@@ -29,6 +29,7 @@ gem 'carrierwave-aws'
 #gem "fog-aws"
 #gem 'fog', '~> 1.38.0'
 #gem 'aws-sdk', '~> 1.55.0'
+gem 'high_voltage', '~> 3.0.0'
 
 gem 'spintax_parser'
 

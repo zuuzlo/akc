@@ -105,7 +105,7 @@ RSpec.describe CouponsController, type: :controller do
       before { get :coupon_link, id: coupon1.id }
 
       it "should redirect to link of coupon plus added" do
-        expect(response).to redirect_to coupon1.link + "&u1=akccb"
+        expect(response).to redirect_to coupon1.link + "&u1=akc"
       end
     end
 
@@ -117,7 +117,7 @@ RSpec.describe CouponsController, type: :controller do
       end
 
       it "should redirect to link of last coupon plus added" do
-        expect(response).to redirect_to coupon2.link + "&u1=akccb"
+        expect(response).to redirect_to coupon2.link + "&u1=akc"
       end
     end
   end
@@ -129,4 +129,35 @@ RSpec.describe CouponsController, type: :controller do
     end
   end
 
+  describe "GET #show" do
+    let!(:coupon1) { Fabricate(:coupon, code: 'BUYNOW', description: 'good car', end_date: Time.now - 3.hour ) }
+    let!(:coupon2) { Fabricate(:coupon, code: nil, description: 'fast car', end_date: Time.now - 1.hour ) }
+    let!(:coupon3) { Fabricate(:coupon, code: nil, description: 'fast dog', end_date: Time.now - 2.hour ) }
+
+    let!(:coupon4) { Fabricate(:coupon, code: 'BUYNOW', description: 'good car', end_date: Time.now + 3.hour ) }
+    let!(:coupon5) { Fabricate(:coupon, code: nil, description: 'fast car', end_date: Time.now + 1.hour ) }
+    let!(:coupon6) { Fabricate(:coupon, code: nil, description: 'fast dog', end_date: Time.now + 2.hour ) }
+
+    before do
+      xhr :get, :show, id: coupon1.id, format: 'html'
+    end
+
+    it "returns http success" do
+      
+      expect(response).to have_http_status(:success)
+    end
+
+    it "has @coupon" do
+      expect(assigns(:coupon)).to eq(coupon1)
+    end
+
+    it "has @simular_coupons" do
+      expect(assigns(:coupons)).to include(coupon4,coupon5,coupon6)
+    end
+
+    it "@simular_coupons has 3" do
+      expect(assigns(:coupons).count).to eq(3)
+    end
+
+  end
 end

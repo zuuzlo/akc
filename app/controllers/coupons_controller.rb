@@ -9,6 +9,12 @@ class CouponsController < ApplicationController
     render :index, locals: { title: "Home", meta_keywords: seo_keywords(@coupons, nil), meta_description: seo_description(@coupons, nil ) } 
   end
 
+  def show
+    @coupon = Coupon.friendly.find(params[:id])
+    @coupons = Coupon.active_coupons[0..2]
+    render :show, locals: { title: "#{@coupon.title}", meta_keywords: seo_keywords(@coupon, nil), meta_description: seo_description(@coupon, nil ) } 
+  end
+
   def search
     @coupons = Coupon.search_by_title(params[:search_term])
     @term = params[:search_term]
@@ -50,5 +56,11 @@ class CouponsController < ApplicationController
       end
       format.js
     end
+  end
+
+  private
+
+  def coupon_params
+    params.require(:coupon).permit(:slug, :id)
   end
 end

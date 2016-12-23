@@ -1,12 +1,27 @@
-!!!
-%html
+!!! 5
+%html(lang="en-US")
   %head
-    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
-    %title= content_for?(:title) ? yield(:title) : 'Akc'
-    %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Akc'}"}
+    %title
+      = full_title(yield (:title))
+    %meta(charset="UTF-8")
+    %meta( http-equiv="X-UA-Compatible" content="IE=edge" )
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %meta(name="googlebot" content="noarchive")
+    %meta{ name: "description",  content: (yield :meta_description) }
+    %meta{ name: "keywords", content: (yield :meta_keywords) }
+    %meta{ property: "og:title", content: "All Kohls Coupons" }
+    %meta{ property: "og:url", content: "allkohlscoupons.com" }
+    %meta{ property: "og:site_name", content: "AllKohlsCoupons.com" }
+    %meta{ property: "og:description", content: (yield :meta_description) }
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
+    /HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    /WARNING: Respond.js doesn't work if you view the page via file:
+    /[if lt IE 9]
+      = javascript_include_tag "https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"
+      = javascript_include_tag "https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"
+    = yield :head  
   %body
     .container
       %header
@@ -14,3 +29,5 @@
       %main{:role => "main"}
         = render 'layouts/messages'
         = yield
+      %footer
+        =render 'shared/footer'

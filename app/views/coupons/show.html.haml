@@ -1,0 +1,48 @@
+-provide(:title, "#{@coupon.title}")
+-provide(:meta_keywords, "#{meta_keywords}") 
+-provide(:meta_description, "#{meta_description}")
+%h1.page-header #{@coupon.title}
+.coupon_header
+  %h2
+    Simular Coupons
+  = render 'shared/coupon_tab_content'
+  #coupon_modal
+.row
+  .box.panel.panel-primary{ 'id' => "coupon_#{@coupon.id}", 'data-type' => "#{coupon_type(@coupon)}", 'class' => "#{coupon_type(@coupon)}" }
+  .panel-heading
+    %h5
+      %b
+        #{@coupon.title}
+  .panel-body
+    = product_image(@coupon)
+    -#if user_signed_in?
+      =# favorites(controller_name, coupon)
+      =# email_coupon(coupon)
+      =# render partial: 'shared/coupon_modal', locals: { coupon: coupon }
+    .well.well-sm.coupon_well
+      %p
+        -if user_signed_in? || coupon_type(@coupon) == "offers" 
+          #{@coupon.description}
+        -else
+          #{@coupon.description.gsub("#{@coupon.code}", "--------")}
+      -if @coupon.code 
+        %h6
+          Coupon Code:
+          -if user_signed_in?
+            %b
+              #{@coupon.code}
+          -else
+            = reveal_code_button(@coupon)
+            //= render partial: 'shared/coupon_reveal_modal', locals: { coupon: coupon }
+      -#if user_signed_in?
+        -#%span.label.label-default
+          -#{coupon.store_commission} 
+          -#\% cash back
+    = button_link(@coupon)
+    %h6
+      - if @coupon.preview?
+        = not_released(@coupon)
+      - else
+        = time_left_display(@coupon)
+    %h6
+      = category_links(@coupon)

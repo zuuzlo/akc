@@ -21,4 +21,13 @@ module ApplicationHelper
       false
     end
   end
+
+  def full_title(page_title)
+    base_title = "Coupons at Kohls: 30% Promo Codes, Kohls Coupon Codes"
+    if page_title.empty?
+      base_title
+    else
+      "#{page_title} | AllKohlsCoupons.com".html_safe
+    end
+  end
 end

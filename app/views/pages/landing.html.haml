@@ -1,0 +1,21 @@
+-provide(:title, "Welcome to CashBack.AllKohlsCoupons.com")
+%h1.cover-heading 
+  Cash Back at Kohl's (kohls.com)
+%p.lead
+  %ul.list-unstyled
+    %li
+      %h4
+        %span.glyphicon.glyphicon-ok
+        Earn Cash Back with each online purchase,
+    %li
+      %h4
+        %span.glyphicon.glyphicon-ok
+        Deals that save you money,
+    %li
+      %h4
+        %span.glyphicon.glyphicon-ok
+        Coupon Codes that work.
+%p.lead
+  = link_to "Free! Get Started Now", new_user_registration_path, class: 'btn btn-lg btn-warning'
+%p.lead
+  = link_to "Try it!", root_url, class: 'btn btn-lg btn-default'

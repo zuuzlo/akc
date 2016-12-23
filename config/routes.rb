@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   #resources :users #, only: [:show]
 
-  resources :coupons, only: [:index] do
+  resources :coupons, only: [:index, :show] do
     member do
       get 'coupon_link'
       get 'reveal_code_link'
@@ -31,4 +31,6 @@ Rails.application.routes.draw do
     get 'get_mailer_kohls_coupons', to: 'coupons#get_mailer_kohls_coupons'
     get 'get_keywords', to: 'coupons#get_keywords'
   end
+
+  #get '/pages/*id' => 'pages#show', as: :page, format: false,  path: '*id'
 end

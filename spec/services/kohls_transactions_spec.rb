@@ -355,5 +355,13 @@ describe KohlsTransactions do
         expect(KohlsTransactions.title_short(title)).to eq("%10 to 30 Off Roomba 620 Robotic Vacuum $419.99")
       end
     end
+
+    context "contains ()" do
+      let(:title) { "$479.99 1/5-ct.T.W. Diamond Engagement Ring Set (reg $1199.99)" }
+
+      it "returns title with no ()" do
+        expect(KohlsTransactions.title_short(title)).to eq("$479.99 1/5 Ct.T.W. Diamond Engagement Ring Set")
+      end
+    end
   end
 end

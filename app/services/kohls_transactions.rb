@@ -178,8 +178,8 @@ class KohlsTransactions
   end
 
   def self.title_short(title)
-    
-    right_split = [/valid.*/i, /reg.*/i, /with code.*/i, /purchase.*/i, /with promo code.*/i]
+    title.delete!('()') if title.include?('(')
+    right_split = [/valid.*/i, /reg.*/i, /with code.*/i, /purchase.*/i, /with promo code.*/i, /orig.*/i]
 
     title_out = String.new
     t = Array.new
