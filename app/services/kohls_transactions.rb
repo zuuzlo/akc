@@ -121,7 +121,7 @@ class KohlsTransactions
       3 => [/free shipping/, /ships free/, /free standard shipping/],
       4 => [/code/],
       6 => [/sitewide/],
-      15 => [/print/]
+      15 => [/print/, /printable/]
     }
 
     types = []
@@ -138,22 +138,26 @@ class KohlsTransactions
   end
 
   def self.find_coupon_code(term)
-    if term.include? " "
-      code_array = ["code","code:", "Code", "Code:"]
-      term_array = term.split(" ").collect(&:strip)
-      code_have = []
-      #require 'pry'; binding.pry
-      code_array.each do | code |
-        code_have << code if term_array.include?("#{code}")
-      end
-      
-      if code_have.size != 0
-        term_array[term_array.index(code_have[0]).to_i + 1].gsub!(/[^a-zA-Z0-9]/,'')
+    if term =~ /no promo code needed/i
+      nil
+    else
+      if term.include? " "
+        code_array = ["code","code:", "Code", "Code:"]
+        term_array = term.split(" ").collect(&:strip)
+        code_have = []
+        #require 'pry'; binding.pry
+        code_array.each do | code |
+          code_have << code if term_array.include?("#{code}")
+        end
+        
+        if code_have.size != 0
+          term_array[term_array.index(code_have[0]).to_i + 1].gsub!(/[^a-zA-Z0-9]/,'')
+        else
+          nil
+        end
       else
         nil
       end
-    else
-      nil
     end
   end
 

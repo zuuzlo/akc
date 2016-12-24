@@ -4,7 +4,8 @@ class CouponsController < ApplicationController
 
   def index
     @coupons = Coupon.active_coupons.paginate(:page => params[:page]).order( 'end_date ASC' )
-    load_coupon_offer_code(@coupons)
+    coupons_active = Coupon.active_coupons
+    load_coupon_offer_code(coupons_active)
     load_cal_picts(@coupons)
     render :index, locals: { title: "Home", meta_keywords: seo_keywords(@coupons, nil), meta_description: seo_description(@coupons, nil ) } 
   end

@@ -223,6 +223,10 @@ describe KohlsTransactions do
     it "returns coupon code if present" do
       expect(KohlsTransactions.find_coupon_code('Extra 15% off All Nunn Bush shoes and sandals. Promo code NUNNBUSH15. 6/9-6/23')).to eq('NUNNBUSH15')
     end
+
+    it "returns nil on no code needed is present" do
+      expect(KohlsTransactions.find_coupon_code('Free shipping on orders of $50+, no promo code needed. Valid 12/1-1/1')).to eq(nil)
+    end
   end
 
   describe "find_product_image" do
