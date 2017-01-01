@@ -78,9 +78,11 @@
             %b.caret
           %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
             %li
-              = link_to 'Invite a Friend', '#'
+              = link_to 'Invite a Friend', new_invitation_path(:user)
             %li
               = link_to 'Sign Out', destroy_user_session_path, :method => :delete
+            %li
+              = link_to "Change your password", edit_user_registration_path
             - if current_user.admin?
               %li.divider
               %li

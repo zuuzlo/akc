@@ -3,8 +3,8 @@ class KohlsTypesController < ApplicationController
   include LoadSeo
 
   def show
-    @ktype = KohlsType.friendly.find(params[:id])
-    load_all_coupons(@ktype)
-    render 'shared/display_coupons', locals: { title: @ktype, meta_keywords: seo_keywords(@coupons, @ktype), meta_description: seo_description(@coupons, @ktype)}
+    @category = KohlsType.friendly.find(params[:id])
+    load_all_coupons(@category)
+    render 'shared/display_coupons', locals: { title: @category, meta_keywords: seo_keywords(@coupons, @category), meta_description: seo_description(@coupons, @category)}
   end
 end

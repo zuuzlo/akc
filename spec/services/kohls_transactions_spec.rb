@@ -23,8 +23,6 @@ describe KohlsTransactions do
     let!(:kcat2) { Fabricate(:kohls_category, kc_id: 2) }
     let!(:kcat3) { Fabricate(:kohls_category, kc_id: 6) }
 
-    #let!(:store1) { Fabricate(:store, id_of_store: 38605) }
-
     before do
       xml_response = <<-XML
         <ns1:getTextLinksResponse xmlns:ns1="http://endpoint.linkservice.linkshare.com/"><ns1:return><ns1:campaignID>0</ns1:campaignID><ns1:categoryID>200334758</ns1:categoryID><ns1:categoryName>Homepage</ns1:categoryName><ns1:linkID>4134</ns1:linkID><ns1:linkName>Apparel buy one get one</ns1:linkName><ns1:mid>38605</ns1:mid><ns1:nid>1</ns1:nid><ns1:clickURL>http://click.linksynergy.com/fs-bin/click?id=V8uMkWlCTes&amp;offerid=328293.4134&amp;type=3</ns1:clickURL><ns1:endDate> </ns1:endDate><ns1:landURL>http://www.kohls.com/catalog.jsp?N=3000061747</ns1:landURL><ns1:showURL>http://ad.linksynergy.com/fs-bin/show?id=V8uMkWlCTes&amp;bids=328293.4134&amp;type=3</ns1:showURL><ns1:startDate>Jun 02, 2014</ns1:startDate><ns1:textDisplay>Apparel</ns1:textDisplay></ns1:return><ns1:return><ns1:campaignID>0</ns1:campaignID><ns1:categoryID>200334760</ns1:categoryID><ns1:categoryName>Men</ns1:categoryName><ns1:linkID>4135</ns1:linkID><ns1:linkName>car</ns1:linkName><ns1:mid>38605</ns1:mid><ns1:nid>1</ns1:nid><ns1:clickURL>http://click.linksynergy.com/fs-bin/click?id=V8uMkWlCTes&amp;offerid=328293.4135&amp;type=3</ns1:clickURL><ns1:endDate>Jun 04, 2014</ns1:endDate><ns1:landURL>http://www.kohls.com/catalog/mens.jsp?CN=4294723349&amp;N=4294723349+3000061849</ns1:landURL><ns1:showURL>http://ad.linksynergy.com/fs-bin/show?id=V8uMkWlCTes&amp;bids=328293.4135&amp;type=3</ns1:showURL><ns1:startDate>Jun 02, 2014</ns1:startDate><ns1:textDisplay>car buy one get one</ns1:textDisplay></ns1:return><ns1:return><ns1:campaignID>0</ns1:campaignID><ns1:categoryID>0</ns1:categoryID><ns1:categoryName>Default</ns1:categoryName><ns1:linkID>4247</ns1:linkID><ns1:linkName>Dad's Day Sale</ns1:linkName><ns1:mid>38605</ns1:mid><ns1:nid>1</ns1:nid><ns1:clickURL>http://click.linksynergy.com/fs-bin/click?id=V8uMkWlCTes&amp;offerid=328293.4247&amp;type=3</ns1:clickURL><ns1:endDate>Jun 12, 2014</ns1:endDate><ns1:landURL>http://www.kohls.com/</ns1:landURL><ns1:showURL>http://ad.linksynergy.com/fs-bin/show?id=V8uMkWlCTes&amp;bids=328293.4247&amp;type=3</ns1:showURL><ns1:startDate>Jun 04, 2014</ns1:startDate><ns1:textDisplay>15% off Everything with Code SUNNY15. Grills conrad 6/4-6/11</ns1:textDisplay></ns1:return></ns1:getTextLinksResponse>
@@ -103,7 +101,7 @@ describe KohlsTransactions do
       end
 
       it "adds coupon to kohls_types" do
-        expect(Coupon.last.kohls_types).to eq([ktype3, ktype4, ktype5])
+        expect(Coupon.last.kohls_types).to eq([ktype4, ktype4, ktype5])
       end
 
       it "adds coupon to kohls_only" do
@@ -299,7 +297,7 @@ describe KohlsTransactions do
       let(:description) { "$14.99 Sleep Sets for women, plus save 60% off Sleepwear for women. Select styles. 7/5-8/1." }
 
       it "returns correct title" do
-        expect(KohlsTransactions.make_title(name, description)).to eq("")
+        expect(KohlsTransactions.make_title(name, description)).to eq("$14.99 Sleep Sets For Women, Plus Save 60% Off Sleepwear For Women. Select Styles. 7/5 to 8/1")
       end
     end
 

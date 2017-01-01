@@ -123,8 +123,9 @@ RSpec.describe CouponsController, type: :controller do
   end
 
   describe "GET #reveal_code_link" do
+    let!(:coupon2) { Fabricate(:coupon, code: 'BUYNOW', description: 'good car', end_date: Time.now + 3.hour ) }
     it "returns http success" do
-      get :reveal_code_link
+      xhr :get, :reveal_code_link, id: coupon2.id, format: :js
       expect(response).to have_http_status(:success)
     end
   end
@@ -158,6 +159,5 @@ RSpec.describe CouponsController, type: :controller do
     it "@simular_coupons has 3" do
       expect(assigns(:coupons).count).to eq(3)
     end
-
   end
 end

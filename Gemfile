@@ -39,11 +39,10 @@ group :development, :test do
 end
 group :development do
   gem 'web-console', '~> 2.0'
-  gem 'spring'
 end
 
-gem 'devise'
-gem 'devise_invitable'
+gem 'devise',           '~> 4.2'
+gem 'devise_invitable', '~> 1.7.0'
 gem 'figaro'
 gem 'haml-rails'
 gem 'pg'
@@ -78,12 +77,13 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-rescue'
   gem 'rspec-rails'
+  gem "letter_opener"
+  gem "launchy"
 end
 group :test do
   gem "shoulda-matchers"
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'launchy'
   gem 'selenium-webdriver'
   gem "webmock"
 end

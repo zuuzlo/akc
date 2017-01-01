@@ -7,11 +7,11 @@ end
 describe FakesController do
   let(:cat1) { Fabricate(:kohls_category, name: "CatName") }
   before do 
-    store1 = Fabricate(:store, commission: 10)
+    #store1 = Fabricate(:store, commission: 10)
     coupon = Array.new
     
     (1..7).each do |i|
-      coupon[i] = Fabricate(:coupon,store_id: store1.id, title: "coupon#{i}", code: ( i%2 == 0) ? "COUP#{i}" : nil, start_date: Time.now - i.day, end_date: Time.now + i.day )
+      coupon[i] = Fabricate(:coupon, title: "coupon#{i}", code: ( i%2 == 0) ? "COUP#{i}" : nil, start_date: Time.now - i.day, end_date: Time.now + i.day )
       cat1.coupons << coupon[i]
     end
   end
@@ -36,13 +36,13 @@ describe FakesController do
     before { set_current_user }
     describe "#seo_description" do
       it "returns meta_description" do
-        expect(subject.seo_description(Coupon.all, cat1)).to eq("checking")
+        expect(subject.seo_description(Coupon.all, cat1)).to include("CatName")
       end
     end
 
     describe "#find_keywords" do
       it "returns keywords" do
-        expect(subject.seo_keywords(Coupon.all, cat1)).to eq("kohls, kohls coupons")
+        expect(subject.seo_keywords(Coupon.all, cat1)).to include("Kohls CatName coupon codes")
       end
     end
   end

@@ -19,7 +19,8 @@ module LoadCoupons
 
   def load_all_coupons(title)
     load_coupons(title)
-    load_coupon_offer_code(@coupons)
+    #load_coupon_offer_code(@coupons)
+    load_coupon_offer_code(title.coupons.active_coupons.all)
     load_cal_picts(@coupons)
   end
 

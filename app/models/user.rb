@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
 
   extend FriendlyId
   friendly_id :email, use: :slugged
+
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
 end

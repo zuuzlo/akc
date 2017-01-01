@@ -8,14 +8,18 @@ feature 'Sign out', :devise do
   #   Given I am signed in
   #   When I sign out
   #   Then I see a signed out message
-  scenario 'user signs out successfully' do
-    user = FactoryGirl.create(:user)
-    signin(user.email, user.password)
-    expect(page).to have_content I18n.t 'devise.sessions.signed_in'
-    click_link 'Sign out'
-    expect(page).to have_content I18n.t 'devise.sessions.signed_out'
-  end
+  describe "sign out successfully" do
+    let(:user) { Fabricate(:user) }
 
+    scenario 'user signs out successfully' do
+      signin(user.email, user.password)
+      expect(page).to have_text "Signed in successfully."
+      #/html/body/div/header/nav/div[2]/ul[2]/li/ul/li[2]/a
+      find(:xpath, '//html/body/div/header/nav/div[2]/ul[2]/li/ul/li[2]/a').click
+      #click_link 'Sign out'
+      expect(page).to have_text 'Signed out successfully.'
+    end
+  end
 end
 
 

@@ -49,7 +49,7 @@ class KohlsTransactions
             new_coupon.kohls_types << KohlsType.find_by_kc_id(type_kohls) if type_kohls
           end
         
-          new_coupon.kohls_types << KohlsType.find_by_kc_id(6) if new_coupon.code
+          new_coupon.kohls_types << KohlsType.find_by_kc_id(4) if new_coupon.code
           
           #require 'pry'; binding.pry
           new_coupon.remote_image_url = find_product_image(name_check)
@@ -138,6 +138,7 @@ class KohlsTransactions
   end
 
   def self.find_coupon_code(term)
+    term ||= ''
     if term =~ /no promo code needed/i
       nil
     else
@@ -182,6 +183,7 @@ class KohlsTransactions
   end
 
   def self.title_short(title)
+    title ||= ' '
     title.delete!('()') if title.include?('(')
     right_split = [/valid.*/i, /reg.*/i, /with code.*/i, /purchase.*/i, /with promo code.*/i, /orig.*/i]
 

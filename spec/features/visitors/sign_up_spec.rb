@@ -1,3 +1,4 @@
+require 'rails_helper'
 # Feature: Sign up
 #   As a visitor
 #   I want to sign up
@@ -9,9 +10,20 @@ feature 'Sign Up', :devise do
   #   When I sign up with a valid email address and password
   #   Then I see a successful sign up message
   scenario 'visitor can sign up with valid email address and password' do
-    sign_up_with('test@example.com', 'please123', 'please123')
+    visit  new_user_registration_path
+    fill_in 'Name', with: 'test'
+    fill_in 'Email', with: 'test@example.com'
+    fill_in 'Password', with: '12345678'
+    fill_in 'Password confirmation', with: '12345678'
+    click_button 'Sign up'
+    #sign_up_with('test@example.com', 'please123', 'please123')
+    #
     txts = [I18n.t( 'devise.registrations.signed_up'), I18n.t( 'devise.registrations.signed_up_but_unconfirmed')]
     expect(page).to have_content(/.*#{txts[0]}.*|.*#{txts[1]}.*/)
+    #require 'pry'; binding.pry
+    expect(User.first.confirmation_sent_at).not_to be_nil
+    #expect(ActionMailer::Base.deliveries.count).to eq(1)
+    #expect(ActionMailer::Base.deliveries.first.to).to eq(['test@example.com'])
   end
 
   # Scenario: Visitor cannot sign up with invalid email address
