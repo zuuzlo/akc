@@ -64,7 +64,7 @@ module CouponsHelper
     if coupon.image
       image_tag("#{coupon.image}", size: "125x125", class: "img-circle", alt: "#{coupon.title}")
     else
-      image_tag( "#{coupon.image}",size: "125x125", alt: "#{coupon.title}" )
+      image_tag( "#{Rails}/public/images/coming_soon.jpg",size: "125x125", alt: "#{coupon.title}" )
     end
   end
 
@@ -127,5 +127,13 @@ module CouponsHelper
       end
     end
 =end
+  end
+
+  def add_comment_link(coupon)
+    link_to add_comment_coupon_url(coupon), method: 'get', remote: true, rel: "nofollow" do
+      capture_haml do
+        haml_concat "Add Comment"
+      end
+    end
   end
 end

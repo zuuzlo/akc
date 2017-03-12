@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  get 'comments/new'
+
+  get 'comments/create'
+
   #devise_for :users
 
   devise_for :users, :controllers => { registrations: 'registrations' }
@@ -12,6 +16,8 @@ Rails.application.routes.draw do
     member do
       get 'coupon_link'
       get 'reveal_code_link'
+      get 'add_comment'
+      get 'hide_comment'
     end
 
     collection do
@@ -20,6 +26,16 @@ Rails.application.routes.draw do
       get 'tab_coupon_codes'
       get 'tab_offers'
     end
+
+    resources :comments do
+      member do
+        get 'reveal_comment'
+      end
+    end
+  end
+
+  resources :comments do
+    resources :comments
   end
 
   resources :kohls_categories, only: [:show]

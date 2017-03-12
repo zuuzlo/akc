@@ -17,7 +17,7 @@ class CouponsController < ApplicationController
   end
 
   def search
-    @coupons = Coupon.search_by_title(params[:search_term])
+    @coupons = Coupon.search_by_title(params[:search_term]).paginate(:page => params[:page]).order( 'end_date ASC' )
     @term = params[:search_term]
     load_coupon_offer_code(@coupons)
     load_cal_picts(@coupons)
@@ -59,6 +59,24 @@ class CouponsController < ApplicationController
     end
   end
 
+  def add_comment
+    @coupon = Coupon.friendly.find(params[:id])
+    respond_to do |format|
+      format.html do
+      end
+      format.js
+    end
+  end
+
+  def hide_comment
+    @coupon = Coupon.friendly.find(params[:id])
+    respond_to do |format|
+      format.html do
+      end
+      format.js
+    end
+  end
+  
   private
 
   def coupon_params

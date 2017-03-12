@@ -1,0 +1,5 @@
+= bootstrap_form_for [@coupon, Comment.new] do | f |
+  = f.text_area :comment, placeholder: "Add Comment"
+  = f.email_field :email, plaseholder: "email"
+  = f.url_field :website, plaseholder: "Web Page"
+  = f.submit class: "btn btn"

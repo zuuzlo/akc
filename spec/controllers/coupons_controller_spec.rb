@@ -160,4 +160,36 @@ RSpec.describe CouponsController, type: :controller do
       expect(assigns(:coupons).count).to eq(3)
     end
   end
+
+  describe "GET #add_comment" do
+    let!(:coupon1) { Fabricate(:coupon, code: 'BUYNOW', description: 'good car', end_date: Time.now + 3.hour ) }
+
+    before do
+      xhr :get, :add_comment, id: coupon1.id, format: 'js'
+    end
+
+    it "returns http success" do   
+      expect(response).to have_http_status(:success)
+    end
+
+    it "has @coupon" do
+      expect(assigns(:coupon)).to eq(coupon1)
+    end
+  end
+
+  describe "GET #hide_comment" do
+    let!(:coupon1) { Fabricate(:coupon, code: 'BUYNOW', description: 'good car', end_date: Time.now + 3.hour ) }
+
+    before do
+      xhr :get, :hide_comment, id: coupon1.id, format: 'js'
+    end
+
+    it "returns http success" do   
+      expect(response).to have_http_status(:success)
+    end
+
+    it "has @coupon" do
+      expect(assigns(:coupon)).to eq(coupon1)
+    end
+  end
 end

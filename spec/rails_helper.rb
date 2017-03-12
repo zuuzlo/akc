@@ -6,6 +6,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 require 'webmock/rspec'
+#require 'carrierwave/test/matchers'
 #include `Devise::Test::ControllerHelpers`
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -34,6 +35,8 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+WebMock.disable_net_connect!(:allow_localhost => true)
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

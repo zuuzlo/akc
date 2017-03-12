@@ -15,6 +15,8 @@ class Coupon < ActiveRecord::Base
   has_many :coupon_kohls_onlies, dependent: :destroy
   has_many :kohls_onlies, :through => :coupon_kohls_onlies
 
+  has_many :comments, as: :commentable, dependent: :destroy
+
   validates :id_of_coupon, presence: true, uniqueness: true
   validates :title, presence: true
   validates :link, presence: true

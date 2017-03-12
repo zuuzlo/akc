@@ -10,6 +10,8 @@ RSpec.describe Coupon, type: :model do
 
   it { should have_many(:kohls_onlies).through(:coupon_kohls_onlies) }
   it { should have_many(:coupon_kohls_onlies).dependent(:destroy) }
+
+  it { should have_many(:comments) }
   
   it { should validate_presence_of(:id_of_coupon) }
   it { should validate_uniqueness_of(:id_of_coupon) }

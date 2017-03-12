@@ -53,8 +53,6 @@ gem 'unicorn-rails'
 gem 'sidekiq'
 gem 'redis'
 
-
-gem 'fabrication'
 group :development do
   gem 'capistrano', '~> 3.4'
   gem 'capistrano-bundler'
@@ -68,6 +66,7 @@ group :development do
   gem 'html2haml'
   gem 'hub', :require=>nil
   gem 'rails_layout'
+
   #gem 'spring-commands-rspec'
 end
 group :development, :test do
@@ -79,6 +78,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem "letter_opener"
   gem "launchy"
+  gem 'fabrication'
+
 end
 group :test do
   gem "shoulda-matchers"

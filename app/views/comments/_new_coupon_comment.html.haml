@@ -1,0 +1,10 @@
+%div{id: "comment_#{@coupon.id}"}
+  = bootstrap_form_for [@coupon, Comment.new] do | f |
+    = f.text_area :comment, hide_label: true, placeholder: "Add Comment", wrapper: { class: 'form-group-sm' }
+    = f.email_field :email, hide_label: true, value: 'name@example.com', wrapper: { class: 'form-group-sm' }
+    = f.url_field :website, hide_label: true, value: "http://website.com", wrapper: { class: 'form-group-sm' }
+    = f.submit "Add Comment", class: "btn btn-default btn-xs"
+  %ul.list-unstyled
+    = render(partial: 'comments/comment', collection: @coupon.comments)
+  =link_to hide_comment_coupon_url(@coupon), method: 'get', remote: true, rel: "nofollow" do
+    Hide Comments

@@ -36,4 +36,8 @@
         = time_left_display(coupon)
     %h6
       = category_links(coupon)
-        
+    %div{id: "comment_#{coupon.id}"}
+      = link_to add_comment_coupon_url(coupon), method: 'get', remote: true, rel: "nofollow" do
+        %span.glyphicon.glyphicon-comment
+        Comments
+        %span.badge="#{coupon.comments.count}"

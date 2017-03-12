@@ -17,5 +17,7 @@ Fabricator(:coupon) do
       "image/jpeg"
     )
   }
+
+  image { File.open("#{Rails.root}/spec/support/files/1322715.jpeg") }
 =end
 end
